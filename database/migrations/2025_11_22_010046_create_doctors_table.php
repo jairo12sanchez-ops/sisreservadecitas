@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('apellidos');
             $table->string('telefono');
             $table->string('licencia_medica');
-            $table->date('especialidad');
+            $table->string('especialidad');
 
             $table->unsignedBigInteger('users_id');
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');

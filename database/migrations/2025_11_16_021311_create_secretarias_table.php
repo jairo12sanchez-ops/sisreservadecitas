@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('apellidos', length: 100);
             $table->string('di', length: 10)->unique();
             $table->string('telefono', length: 100);
-            $table->string('fecha de nacimiento', length: 100);
+            $table->string('fecha_nacimiento', length: 100);
             $table->string('direccion', length: 255);
 
             $table->unsignedBigInteger('users_id');

@@ -13,15 +13,20 @@ class Doctor extends Model
 
     public function consultorio()
     {
-        return $this->belongsTo(consultorio::class);
+        return $this->belongsTo(Consultorio::class);
     }
 
     public function horarios()
     {
-        return $this->hasMany(horarios::class);
+        return $this->hasMany(Horarios::class);
     }
     public function user(){
     return $this->belongsTo(User::class,'users_id');
 }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 
 }

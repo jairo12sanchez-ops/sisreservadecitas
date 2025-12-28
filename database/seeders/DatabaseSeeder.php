@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\consultorio;
+use App\Models\Doctor;
+use App\Models\Secretaria;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -21,105 +24,108 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-      //seeder para los roles y permisos admin, secretaria, doctores, pacientes, usuarios
-              $admin = Role::create(['name'=>'admin']);
-              $secretaria = Role::create(['name'=>'secretaria']);
-              $doctor = Role::create(['name'=>'doctor']);
-              $paciente = Role::create(['name'=>'paciente']);
-              $usuario = Role::create(['name'=>'usuario']);
 
+        $this->call([RoleSeeder::class,]);
         User::create([
-            'name'=>'Administrador',
-            'email'=>'admin@admin.com',
-            'password'=>Hash::make(value:'12345678')
+            'name' => 'Administrador',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make(value: '12345678')
         ])->assignRole('admin');
         User::create([
-            'name'=>'Secretaria',
-            'email'=>'secretaria@admin.com',
-            'password'=>Hash::make(value:'12345678')
+            'name' => 'Secretaria',
+            'email' => 'secretaria@admin.com',
+            'password' => Hash::make(value: '12345678')
         ])->assignRole('secretaria');
+
+        Secretaria::create([
+            'nombres' => 'secretaria',
+            'apellidos' => '1',
+            'di' => '111111',
+            'telefono' => '7777777',
+            'fecha de nacimiento' => '12/10/1980',
+            'direccion' => 'calle 4 # 34-78',
+            'users_id'=>'2',
+        ]);
+
         User::create([
-            'name'=>'Doctor1',
-            'email'=>'doctor1@admin.com',
-            'password'=>Hash::make(value:'12345678')
+            'name' => 'Doctor1',
+            'email' => 'doctor1@admin.com',
+            'password' => Hash::make(value: '12345678')
         ])->assignRole('doctor');
+        Doctor::create([
+            'nombres' => 'Doctor1',
+            'apellidos' => 'Gutierrez',
+            'telefono' => '46577980',
+            'licencia_medica' => '566879',
+            'especialidad' => 'Ortodoncia',
+            'users_id'=>'3',
+        ]);
+
         User::create([
-            'name'=>'Paciente1',
-            'email'=>'paciente1@admin.com',
-            'password'=>Hash::make(value:'12345678')
+            'name' => 'Doctor2',
+            'email' => 'doctor2@admin.com',
+            'password' => Hash::make(value: '12345678')
+        ])->assignRole('doctor');
+
+        Doctor::create([
+            'nombres' => 'Doctor2',
+            'apellidos' => 'Sanchez',
+            'telefono' => '46577987',
+            'licencia_medica' => '56687945',
+            'especialidad' => 'Odontologia',
+            'users_id'=>'4',
+        ]);
+        User::create([
+            'name' => 'Doctor3',
+            'email' => 'doctor3@admin.com',
+            'password' => Hash::make(value: '12345678')
+        ])->assignRole('doctor');
+        Doctor::create([
+            'nombres' => 'Doctor3',
+            'apellidos' => 'Arrieta',
+            'telefono' => '46577980',
+            'licencia_medica' => '566879',
+            'especialidad' => 'Higienista',
+            'users_id'=>'5',
+        ]);
+
+        consultorio::create([
+            'nombre' => 'ORTODONCIA',
+            'ubicacion' => '1-1A',
+            'capacidad' => '10',
+            'telefono'=>'EXT 4',
+            'especialidad' => 'ORTODONCIA',
+            'estado' => 'ACTIVO',
+        ]);
+        consultorio::create([
+            'nombre' => 'ODONTOLOGIA GENERAL',
+            'ubicacion' => '1-1B',
+            'capacidad' => '10',
+            'telefono'=>'EXT 5',
+            'especialidad' => 'ODONTOLOGIA',
+            'estado' => 'ACTIVO',
+        ]);
+        consultorio::create([
+            'nombre' => 'ENDODONCIA',
+            'ubicacion' => '1-1C',
+            'capacidad' => '10',
+            'telefono'=>'EXT 8',
+            'especialidad' => 'ENDODONCIA',
+            'estado' => 'ACTIVO',
+        ]);
+
+        User::create([
+            'name' => 'Paciente1',
+            'email' => 'paciente1@admin.com',
+            'password' => Hash::make(value: '12345678')
         ])->assignRole('paciente');
         User::create([
-                    'name'=>'Usuario1',
-                    'email'=>'usuario1@admin.com',
-                    'password'=>Hash::make(value:'12345678')
-                ])->assignRole('usuario');
-
-        Permission:: create(['name'=>'admin.index']);
-
-        // rutas para el admin - usuarios
-        Permission:: create(['name'=>'admin.usuarios.index'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.create'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.store'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.show'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.edit'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.update'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.confirmDelete'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.destroy'])->syncRoles([$admin]);
-
-        //rutas para el admin-secretarias
-        Permission:: create(['name'=>'admin.secretarias.index'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.create'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.store'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.show'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.edit'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.update'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.confirmDelete'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.destroy'])->syncRoles([$admin]);
-
-        //rutas para el admin-pacientes
-        Permission:: create(['name'=>'admin.pacientes.index'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.create'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.store'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.show'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.edit'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.update'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.confirmDelete'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.destroy'])->syncRoles([$admin,$secretaria]);
-
-        //rutas para el admin-consultorios
-        Permission:: create(['name'=>'admin.consultorios.index'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.create'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.store'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.show'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.edit'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.update'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.confirmDelete'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.destroy'])->syncRoles([$admin,$secretaria]);
-
-
-        //rutas para el admin-doctores
-        Permission:: create(['name'=>'admin.doctores.index'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.create'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.store'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.show'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.edit'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.update'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.confirmDelete'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.destroy'])->syncRoles([$admin,$secretaria]);
-
-        //rutas para el admin-horarios
-        Permission:: create(['name'=>'admin.horarios.index'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.create'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.store'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.show'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.edit'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.update'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.confirmDelete'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.destroy'])->syncRoles([$admin,$secretaria]);
-
-        Permission:: create(['name'=>'admin.horarios.cargar_datos_consultorios'])->syncRoles([$admin,$secretaria]);
-
+            'name' => 'Usuario1',
+            'email' => 'usuario1@admin.com',
+            'password' => Hash::make(value: '12345678')
+        ])->assignRole('usuario');
 
         $this->call([PacienteSeeder::class,]);
     }
 }
+

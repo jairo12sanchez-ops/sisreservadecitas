@@ -130,12 +130,10 @@
         $(document).ready(function() {
             $('#consultorio_id').on('change', function() {
                 var consultorio_id = $(this).val();
-                var url = "{{ route('admin.horarios.cargar_datos_consultorios', ':id') }}";
-                url = url.replace(':id', consultorio_id);
 
                 if(consultorio_id) {
                     $.ajax({
-                        url: url,
+                            url: "{{url('/admin/horarios/consultorios/')}}"  + '/' +consultorio_id,
                         type: 'GET',
                         beforeSend: function() {
                             $('#consultorio_info').html('<div class="text-center p-5"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Cargando calendario...</div>');

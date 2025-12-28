@@ -27,6 +27,8 @@
 
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="{{url('plugins/jquery/jquery.min.js')}}"></script>
     <head>
         ...
         <style>
@@ -132,7 +134,7 @@
                     <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
                         <h3>Reserva tu Cita Odontologica?</h3>
                         <div class="text-center">
-                            <a href="#about" class="more-btn"><span>Reservar Ahora</span> <i class="bi bi-chevron-right"></i></a>
+                            <a href="{{url('/admin')}}" class="more-btn"><span>Reservar Ahora</span> <i class="bi bi-chevron-right"></i></a>
                         </div>
                     </div>
                 </div><!-- End Why Box -->
@@ -173,6 +175,61 @@
         </div>
 
     </section><!-- /Hero Section -->
+
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Calendario De Atención De Doctores</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="consultorio_id">Consultorios</label>
+                                <select name="consultorio_id" id="consultorio_select" class="form-control">
+                                    @foreach($consultorios as $consultorio)
+                                        <option value="{{ $consultorio->id }}">
+                                            {{ $consultorio->nombre . ' - ' . $consultorio->ubicacion }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <script>
+                            $('#consultorio_select').on('change',function () {
+                                var consultorio_id = $('#consultorio_select').val();
+                                //(consultorio_id);
+
+                                if(consultorio_id){
+                                    $.ajax({
+                                        url: "{{url('/consultorios/')}}"  + '/' +consultorio_id,
+                                        type:'GET',
+                                        success: function (data){
+                                            $('#consultorio_info').html(data);
+                                        },
+                                        error: function (){
+                                            alert('Error al obtener los datos del consultorio');
+                                        }
+                                    });
+                                }else{
+                                    $('#consultorio_info').html('');
+                                }
+                            });
+                        </script>
+                        <hr>
+                        <div id="consultorio_info">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- About Section -->
     <section id="about" class="about section">
