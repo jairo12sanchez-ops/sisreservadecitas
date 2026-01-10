@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\consultorio;
 use App\Models\Doctor;
+use App\Models\Horario;
 use App\Models\Secretaria;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -42,7 +43,7 @@ class DatabaseSeeder extends Seeder
             'apellidos' => '1',
             'di' => '111111',
             'telefono' => '7777777',
-            'fecha de nacimiento' => '12/10/1980',
+            'fecha_nacimiento' => '12/10/1980',
             'direccion' => 'calle 4 # 34-78',
             'users_id'=>'2',
         ]);
@@ -126,6 +127,19 @@ class DatabaseSeeder extends Seeder
         ])->assignRole('usuario');
 
         $this->call([PacienteSeeder::class,]);
+
+
+
+
+
+        /////creacion de horarios
+        Horario::create([
+            'dia'=>'LUNES',
+            'hora_inicio'=>'08:00',
+            'hora_fin'=>'14:00',
+            'doctor_id'=>'1',
+            'consultorio_id'=>'1',
+        ]);
     }
 }
 

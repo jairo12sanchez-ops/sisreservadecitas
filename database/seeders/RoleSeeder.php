@@ -34,6 +34,16 @@ class RoleSeeder extends Seeder
         Permission:: create(['name'=>'admin.usuarios.confirmDelete'])->syncRoles([$admin]);
         Permission:: create(['name'=>'admin.usuarios.destroy'])->syncRoles([$admin]);
 
+        // rutas para el admin - configuraciones
+        Permission:: create(['name'=>'admin.configuraciones.index'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.configuraciones.create'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.configuraciones.store'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.configuraciones.show'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.configuraciones.edit'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.configuraciones.update'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.configuraciones.confirmDelete'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.configuraciones.destroy'])->syncRoles([$admin]);
+
 //rutas para el admin-secretarias
         Permission:: create(['name'=>'admin.secretarias.index'])->syncRoles([$admin]);
         Permission:: create(['name'=>'admin.secretarias.create'])->syncRoles([$admin]);
@@ -87,6 +97,13 @@ class RoleSeeder extends Seeder
 
         Permission:: create(['name'=>'admin.horarios.cargar_datos_consultorios'])->syncRoles([$admin,$secretaria]);
 
+        ///RUTAS PARA EL USUARIO
+        /////ajax
+        Permission:: create(['name'=>'cargar_datos_consultorios'])->syncRoles([$admin,$usuario]);
+        Permission:: create(['name'=>'cargar_reserva_doctores'])->syncRoles([$admin,$usuario]);
+        Permission:: create(['name'=>'ver_reservas'])->syncRoles([$admin,$usuario]);
+        Permission:: create(['name'=>'admin.eventos.create'])->syncRoles([$admin,$usuario]);
+        Permission:: create(['name'=>'admin.eventos.destroy'])->syncRoles([$admin,$usuario]);
 
     }
 }
