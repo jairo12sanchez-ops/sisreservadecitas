@@ -84,6 +84,8 @@ class RoleSeeder extends Seeder
         Permission:: create(['name'=>'admin.doctores.update'])->syncRoles([$admin,$secretaria]);
         Permission:: create(['name'=>'admin.doctores.confirmDelete'])->syncRoles([$admin,$secretaria]);
         Permission:: create(['name'=>'admin.doctores.destroy'])->syncRoles([$admin,$secretaria]);
+        Permission:: create(['name'=>'admin.doctores.reportes'])->syncRoles([$admin,$secretaria]);
+        Permission:: create(['name'=>'admin.doctores.pdf'])->syncRoles([$admin,$secretaria]);
 
 //rutas para el admin-horarios
         Permission:: create(['name'=>'admin.horarios.index'])->syncRoles([$admin,$secretaria]);

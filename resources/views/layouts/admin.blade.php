@@ -225,6 +225,12 @@ with font-awesome or any other icon font library -->
                                         <p>Listado de Doctores</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{url('admin/doctores/reportes')}}" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reportes</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     @endcan

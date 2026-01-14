@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\configuracione;
 use App\Models\Doctor;
 use App\Models\Secretaria;
 use App\Models\User;
@@ -135,5 +136,14 @@ class DoctorController extends Controller
         return redirect()->route('admin.doctores.index')
             ->with('mensaje', 'se elimino correctamente!')
             ->with('icono', 'success');
+    }
+    public function reportes(){
+        return view('admin.doctores.reportes');
+    }
+    public function pdf(){
+        $configuracion = configuracione::latest()->first();
+        $doctores=Doctor::all();
+        $pdf = \PDF::loadView('admin.doctores.pdf', compact('configuracion','doctores'));
+        return $pdf->stream();
     }
 }
