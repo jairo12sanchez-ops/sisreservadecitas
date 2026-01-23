@@ -9,7 +9,7 @@ class Doctor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombres', 'apellidos', 'telefono', 'licencia_medica', 'especialidad', 'user_id'];
+    protected $fillable = ['nombres', 'apellidos', 'telefono', 'licencia_medica', 'especialidad', 'user_id', 'consultorio_id'];
 
     public function consultorio()
     {
@@ -27,6 +27,10 @@ class Doctor extends Model
     public function events()
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function historial(){
+        return $this->hasMany(historial::class);
     }
 
 }

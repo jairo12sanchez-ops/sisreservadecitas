@@ -1,12 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\configuracione;
 use App\Models\Doctor;
 use App\Models\Secretaria;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Testing\Fluent\Concerns\Has;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
@@ -135,5 +137,22 @@ class DoctorController extends Controller
         return redirect()->route('admin.doctores.index')
             ->with('mensaje', 'se elimino correctamente!')
             ->with('icono', 'success');
+    }
+    public function reportes(){
+        return view('admin.doctores.reportes');
+    }
+    public function pdf(){
+        $configuracion = configuracione::latest()->first();
+        $doctores = Doctor::all();
+        $pdf = \PDF::loadView('admin.doctores.pdf', compact('configuracion','doctores'));
+
+        // incluir la numeración de páginas y el pie de página
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+        $canvas->page_text(20, 800, "Impreso por: " . Auth::user()->email, null, 10, array(0, 0, 0));
+        $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0, 0, 0));
+        $canvas->page_text(450, 800, "Fecha: " . \Carbon\Carbon::now('America/Bogota')->format('d/m/Y H:i:s'), null, 10, array(0, 0, 0));
+        return $pdf->stream();
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\configuracione;
 use App\Models\consultorio;
 use App\Models\Doctor;
 use App\Models\Horario;
@@ -139,6 +140,15 @@ class DatabaseSeeder extends Seeder
             'hora_fin'=>'14:00',
             'doctor_id'=>'1',
             'consultorio_id'=>'1',
+        ]);
+
+        configuracione::create([
+            'nombre'=>'Clinica Odoes',
+            'direccion'=>'avenida circunvalar # 20n 30',
+            'telefono'=>'45678879',
+            'correo'=>'jairo23@gmail.com',
+            'logo'=>'logos/k19bnpxJT7X75jkeAVtp5AH9zSV2viw0BOYGvqZC.jpg',
+
         ]);
     }
 }

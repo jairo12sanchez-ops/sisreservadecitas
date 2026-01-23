@@ -84,6 +84,8 @@ class RoleSeeder extends Seeder
         Permission:: create(['name'=>'admin.doctores.update'])->syncRoles([$admin,$secretaria]);
         Permission:: create(['name'=>'admin.doctores.confirmDelete'])->syncRoles([$admin,$secretaria]);
         Permission:: create(['name'=>'admin.doctores.destroy'])->syncRoles([$admin,$secretaria]);
+        Permission:: create(['name'=>'admin.doctores.reportes'])->syncRoles([$admin,$secretaria]);
+        Permission:: create(['name'=>'admin.doctores.pdf'])->syncRoles([$admin,$secretaria]);
 
 //rutas para el admin-horarios
         Permission:: create(['name'=>'admin.horarios.index'])->syncRoles([$admin,$secretaria]);
@@ -105,5 +107,20 @@ class RoleSeeder extends Seeder
         Permission:: create(['name'=>'admin.eventos.create'])->syncRoles([$admin,$usuario]);
         Permission:: create(['name'=>'admin.eventos.destroy'])->syncRoles([$admin,$usuario]);
 
+        //rutas para las reservas
+        Permission:: create(['name'=>'admin.reservas.reportes'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.reservas.pdf'])->syncRoles([$admin]);
+        Permission:: create(['name'=>'admin.reservas.pdf_fechas'])->syncRoles([$admin]);
+
+        //rutas para el historial clinico,
+        Permission:: create(['name'=>'admin.historial.index'])->syncRoles([$admin, $doctor]);
+        Permission:: create(['name'=>'admin.historial.create'])->syncRoles([$admin, $doctor]);
+        Permission:: create(['name'=>'admin.historial.store'])->syncRoles([$admin, $doctor]);
+        Permission:: create(['name'=>'admin.historial.pdf'])->syncRoles([$admin, $doctor]);
+        Permission:: create(['name'=>'admin.historial.show'])->syncRoles([$admin, $doctor]);
+        Permission:: create(['name'=>'admin.historial.edit'])->syncRoles([$admin, $doctor]);
+        Permission:: create(['name'=>'admin.historial.update'])->syncRoles([$admin, $doctor]);
+        Permission:: create(['name'=>'admin.historial.confirmDelete'])->syncRoles([$admin, $doctor]);
+        Permission:: create(['name'=>'admin.historial.destroy'])->syncRoles([$admin, $doctor]);
     }
 }

@@ -110,6 +110,21 @@
                 </div>
             @endcan
 
+            @can('admin.horarios.index')
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-gradient-primary">
+                        <div class="inner">
+                            <h3>{{$total_configuraciones}}</h3>
+                            <p>Configuraciones</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion fas bi bi-gear"></i>
+                        </div>
+                        <a href="{{url('/admin/configuraciones')}}" class="small-box-footer">Mas Información <i class="fas bi bi-gear "></i></a>
+                    </div>
+                </div>
+            @endcan
+
     </div>
 
     @can('cargar_datos_consultorios')
@@ -369,7 +384,7 @@
                                 @if(Auth::user()->doctor->id == $evento->doctor_id)
                                     <tr>
                                         <td style="text-align: center">{{ $contador++}}</td>
-                                        <td>{{ $evento->user->name}} </td>
+                                        <td>{{ $evento->user->name ?? 'Usuario no disponible' }} </td>
                                         <td style="text-align: center">{{ \Carbon\Carbon::parse($evento->start)->format('Y-m-d')}}</td>
                                         <td style="text-align: center">{{ \Carbon\Carbon::parse($evento->start)->format('H:i')}}</td>
                                     </tr>

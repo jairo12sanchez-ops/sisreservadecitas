@@ -10,4 +10,8 @@ class paciente extends Model
 {
     use HasRoles, HasFactory;
     protected $guard_name = 'web';
+
+    public function historial(){
+        return $this->hasMany(historial::class);
+    }
 }

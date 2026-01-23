@@ -30,6 +30,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- FULLCALENDAR -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
     <script src="{{url('fullcalendar/es.global.js')}}"></script>
+
+    <!-- CKEditor -->
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css" />
+
+
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -225,6 +231,12 @@ with font-awesome or any other icon font library -->
                                         <p>Listado de Doctores</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{url('admin/doctores/reportes')}}" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reportes</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     @endcan
@@ -249,6 +261,45 @@ with font-awesome or any other icon font library -->
                                     <a href="{{url('admin/horarios')}}" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Listado de Horarios</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endcan
+                    @can('admin.usuarios.index')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon bi bi-calendar2-check"></i>
+                                <p>
+                                    Reservas
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{url('admin/reservas/reportes')}}" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Reportes</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endcan
+
+                    @can('admin.historial.index')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon bi bi-file-earmark-medical"></i>
+                                <p>
+                                    Historial Clinico
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{url('admin/historial')}}" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Listado del Historial</p>
                                     </a>
                                 </li>
                             </ul>

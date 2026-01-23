@@ -93,7 +93,7 @@ class ConfiguracioneController extends Controller
         $configuracion->correo = $request->correo;
 
         if($request->hasFile('logo')) {
-            Storage::delete('public/' . $configuracion->logo);
+            Storage::disk('public')->delete($configuracion->logo);
             $configuracion->logo = $request->file('logo')->store('logos', 'public');
         }
         $configuracion->save();
@@ -106,8 +106,19 @@ class ConfiguracioneController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(configuracione $configuracione)
+
+    public function confirmDelete($id)
     {
-        //
+        $configuracion = Configuracione::find($id);
+        return view('admin.configuracion.delete',compact('configuracion'));
+    }
+    public function destroy($id)
+    {
+        $configuracion = configuracione::find($id);
+        Storage::disk('public')->delete($configuracion->logo);
+        $configuracion->delete($id);
+        return redirect()->route('admin.configuraciones.index')
+            ->with('mensaje','Configuracion eliminada!')
+            ->with('icono','success');
     }
 }
