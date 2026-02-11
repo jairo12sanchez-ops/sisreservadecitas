@@ -258,6 +258,50 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
+                                                    @can('admin.pacientes.index')
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="">Buscar Paciente </label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control" id="buscar_di" placeholder="Digite documento">
+                                                                    <div class="input-group-append">
+                                                                        <button class="btn btn-primary" type="button" id="btn_buscar_paciente">
+                                                                            <i class="bi bi-search"></i> Buscar
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text" class="form-control" id="nombre_paciente" readonly>
+                                                                <input type="hidden" name="paciente_id" id="paciente_id_hidden">
+                                                                <hr>
+                                                            </div>
+                                                            <script>
+                                                                $('#btn_buscar_paciente').click(function(){
+                                                                    var di = $('#buscar_di').val();
+                                                                    if(di){
+                                                                        $.ajax({
+                                                                            url: "{{url('/admin/pacientes/buscar')}}" + '/' + di,
+                                                                            type: 'GET',
+                                                                            success: function(response){
+                                                                                if(response.status == 'success'){
+                                                                                    $('#nombre_paciente').val(response.paciente.apellidos + ' ' + response.paciente.nombres);
+                                                                                    $('#paciente_id_hidden').val(response.paciente.id);
+                                                                                }else{
+                                                                                    $('#nombre_paciente').val('');
+                                                                                    $('#paciente_id_hidden').val('');
+                                                                                    $('#modalErrorPaciente').modal('show');
+                                                                                }
+                                                                            },
+                                                                            error: function(){
+                                                                                $('#modalErrorPaciente').modal('show');
+                                                                            }
+                                                                        });
+                                                                    }else{
+                                                                        alert('Por favor digite un documento de identidad');
+                                                                    }
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                    @endcan
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="">Doctor</label>
@@ -348,6 +392,27 @@
                                     </div>
                                 </div>
                             </form>
+
+                            <!-- Modal de error paciente - fuera del modal principal -->
+                            <div class="modal fade" id="modalErrorPaciente" tabindex="-1" role="dialog" aria-labelledby="modalErrorLabel" aria-hidden="true" style="z-index: 9999;">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title" id="modalErrorLabel"><i class="bi bi-exclamation-triangle"></i> Paciente no encontrado</h5>
+                                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Paciente No Encontrado</p>
+                                            <p class="mb-0"><strong>intente nuevamente.</strong></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div id='calendar'></div>
                     </div>

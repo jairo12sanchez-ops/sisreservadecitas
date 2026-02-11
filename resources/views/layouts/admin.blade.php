@@ -302,6 +302,32 @@ with font-awesome or any other icon font library -->
                                         <p>Listado del Historial</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{url('admin/historial/buscar_paciente')}}" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Buscar Paciente</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endcan
+
+                    @can('admin.pagos.index')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon bi bi-cash"></i>
+                                <p>
+                                    Pagos
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{url('admin/pagos')}}" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Listado de Pagos</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     @endcan

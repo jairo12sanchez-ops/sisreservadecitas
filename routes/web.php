@@ -61,6 +61,7 @@ Route::get('/admin/pacientes/{id}/edit', [App\Http\Controllers\PacienteControlle
 Route::put('/admin/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'update'])->name('admin.pacientes.update')->middleware('auth','can:admin.pacientes.update');
 Route::get('/admin/pacientes/{id}/confirmDelete', [App\Http\Controllers\PacienteController::class, 'confirmDelete'])->name('admin.pacientes.confirmDelete')->middleware('auth','can:admin.pacientes.confirmDelete');
 Route::delete('/admin/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'destroy'])->name('admin.pacientes.destroy')->middleware('auth','can:admin.pacientes.destroy');
+Route::get('/admin/pacientes/buscar/{di}', [App\Http\Controllers\PacienteController::class, 'buscar_por_di'])->name('admin.pacientes.buscar_por_di')->middleware('auth');
 
 //rutas para el admin-consultorios
 Route::get('/admin/consultorios', [App\Http\Controllers\ConsultorioController::class, 'index'])->name('admin.consultorios.index')->middleware('auth','can:admin.consultorios.index');
@@ -99,7 +100,7 @@ Route::get('/admin/horarios/consultorios/{id}', [App\Http\Controllers\HorarioCon
 
 ///RUTAS PARA EL USUARIO
 //ajax
-Route::get('/consultorios/{id}', [App\Http\Controllers\WebController::class, 'cargar_datos_consultorios'])->name('cargar_datos_consultorios')->middleware('auth','can:cargar_datos_consultorios');
+Route::get('/consultorios/{id}', [App\Http\Controllers\WebController::class, 'cargar_datos_consultorios'])->name('cargar_datos_consultorios');
 Route::get('/cargar_reserva_doctores/{id}', [App\Http\Controllers\WebController::class, 'cargar_reserva_doctores'])->name('cargar_reserva_doctores')->middleware('auth','can:cargar_reserva_doctores');
 Route::get('/admin/ver_reservas/{id}', [App\Http\Controllers\adminController::class, 'ver_reservas'])->name('ver_reservas')->middleware('auth','can:ver_reservas');
 Route::post('/admin/eventos/create', [App\Http\Controllers\EventController::class, 'store'])->name('admin.eventos.create')->middleware('auth','can:admin.eventos.create');
@@ -115,9 +116,22 @@ Route::get('/admin/reservas/pdf_fechas', [App\Http\Controllers\EventController::
 Route::get('/admin/historial', [App\Http\Controllers\HistorialController::class, 'index'])->name('admin.historial.index')->middleware('auth','can:admin.historial.index');
 Route::get('/admin/historial/create', [App\Http\Controllers\HistorialController::class, 'create'])->name('admin.historial.create')->middleware('auth','can:admin.historial.create');
 Route::post('/admin/historial/create', [App\Http\Controllers\HistorialController::class, 'store'])->name('admin.historial.store')->middleware('auth','can:admin.historial.store');
-Route::get('/admin/historial/pdf', [App\Http\Controllers\HistorialController::class, 'pdf'])->name('admin.historial.pdf')->middleware('auth','can:admin.historial.pdf');
+Route::get('/admin/historial/pdf/{id}', [App\Http\Controllers\HistorialController::class, 'pdf'])->name('admin.historial.pdf')->middleware('auth','can:admin.historial.pdf');
+Route::get('/admin/historial/buscar_paciente', [App\Http\Controllers\HistorialController::class, 'buscar_paciente'])->name('admin.historial.buscar_paciente')->middleware('auth','can:admin.historial.buscar_paciente');
+Route::get('/admin/historial/paciente/{id}', [App\Http\Controllers\HistorialController::class, 'imprimir_historial'])->name('admin.historial.imprimir_historial')->middleware('auth','can:admin.historial.imprimir_historial');
 Route::get('/admin/historial/{id}', [App\Http\Controllers\HistorialController::class, 'show'])->name('admin.historial.show')->middleware('auth','can:admin.historial.show');
 Route::get('/admin/historial/{id}/edit', [App\Http\Controllers\HistorialController::class, 'edit'])->name('admin.historial.edit')->middleware('auth','can:admin.historial.edit');
 Route::put('/admin/historial/{id}', [App\Http\Controllers\HistorialController::class, 'update'])->name('admin.historial.update')->middleware('auth','can:admin.historial.update');
 Route::get('/admin/historial/{id}/confirmDelete', [App\Http\Controllers\HistorialController::class, 'confirmDelete'])->name('admin.historial.confirmDelete')->middleware('auth','can:admin.historial.confirmDelete');
 Route::delete('/admin/historial/{id}', [App\Http\Controllers\HistorialController::class, 'destroy'])->name('admin.historial.destroy')->middleware('auth','can:admin.historial.destroy');
+
+//rutas para pago
+Route::get('/admin/pagos', [App\Http\Controllers\PagoController::class, 'index'])->name('admin.pagos.index')->middleware('auth','can:admin.pagos.index');
+Route::get('/admin/pagos/create', [App\Http\Controllers\PagoController::class, 'create'])->name('admin.pagos.create')->middleware('auth','can:admin.pagos.create');
+Route::post('/admin/pagos/create', [App\Http\Controllers\PagoController::class, 'store'])->name('admin.pagos.store')->middleware('auth','can:admin.pagos.store');
+Route::get('/admin/pagos/pdf/{id}', [App\Http\Controllers\PagoController::class, 'pdf'])->name('admin.pagos.pdf')->middleware('auth','can:admin.pagos.pdf');
+Route::get('/admin/pagos/{id}', [App\Http\Controllers\PagoController::class, 'show'])->name('admin.pagos.show')->middleware('auth','can:admin.pagos.show');
+Route::get('/admin/pagos/{id}/edit', [App\Http\Controllers\PagoController::class, 'edit'])->name('admin.pagos.edit')->middleware('auth','can:admin.pagos.edit');
+Route::put('/admin/pagos/{id}', [App\Http\Controllers\PagoController::class, 'update'])->name('admin.pagos.update')->middleware('auth','can:admin.pagos.update');
+Route::get('/admin/pagos/{id}/confirmDelete', [App\Http\Controllers\PagoController::class, 'confirmDelete'])->name('admin.pagos.confirmDelete')->middleware('auth','can:admin.pagos.confirmDelete');
+Route::delete('/admin/pagos/{id}', [App\Http\Controllers\PagoController::class, 'destroy'])->name('admin.pagos.destroy')->middleware('auth','can:admin.pagos.destroy');

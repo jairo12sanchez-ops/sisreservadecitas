@@ -11,6 +11,7 @@ use App\Models\Secretaria;
 use App\Models\User;
 use App\Models\Horario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -27,9 +28,13 @@ class AdminController extends Controller
         $consultorios = Consultorio::all();
         $doctores = Doctor::all();
         $eventos = Event::all();
+        $pacientes = [];
+        if(Auth::user()->can('admin.secretarias.index') || Auth::user()->can('admin.pacientes.index')){
+            $pacientes = Paciente::orderBy('apellidos','asc')->get();
+        }
 
         return view('admin.index', compact('total_usuarios','total_secretarias','total_pacientes',
-        'total_consultorios','total_doctores', 'total_horarios', 'consultorios', 'doctores', 'eventos','total_eventos', 'total_configuraciones'));
+        'total_consultorios','total_doctores', 'total_horarios', 'consultorios', 'doctores', 'eventos','total_eventos', 'total_configuraciones','pacientes'));
 
     }
     public function ver_reservas($id){

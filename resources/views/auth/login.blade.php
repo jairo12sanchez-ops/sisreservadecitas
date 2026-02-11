@@ -23,7 +23,9 @@ background-repeat: no-repeat;
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="" class="h1"><b>JasaDent</a>
+            <a href="" class="d-flex justify-content-center align-items-center">
+                <img src="{{asset('assets/img/logo_odoes.jpeg')}}" alt="JasaDent Logo" style="max-height: 100px; padding: 10px; background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+            </a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Inicio de Sesion</p>
@@ -61,12 +63,12 @@ background-repeat: no-repeat;
                     <div class="row mb-0">
                         <div class="col-md-8 offset-md-4">
                             <button type="submit" class="btn btn-primary">
-                                {{ __('Login') }}
+                                {{ __('Ingresar') }}
                             </button>
 
                             @if (Route::has('password.request'))
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
+                                    {{ __('Olvidaste tu contraseña?') }}
                                 </a>
                             @endif
                         </div>

@@ -36,6 +36,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if(!Auth::user()->doctor)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Doctor</label>
+                                            <select name="doctor_id" id="" class="form-control">
+                                                @foreach($doctores as $doctor)
+                                                    <option value="{{$doctor->id}}">{{$doctor->apellidos." ".$doctor->nombres}} - {{$doctor->especialidad}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                                 <br>
                                 <div class="rom">
                                     <div class="col-md-12">

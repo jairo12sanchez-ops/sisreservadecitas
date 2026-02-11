@@ -51,67 +51,50 @@
 <br>
 
 <div style="page-break-inside: avoid;">
-   <table>
-       <h3>Informacion Del Paciente</h3>
-       <tr>
-           <td><b>Identificacion: </b></td>
-           <td>{{$historial->paciente->di}}</td>
-       </tr>
-    <tr>
-        <td><B>Paciente: </B></td>
-        <td>{{$historial->paciente->apellidos." ".$historial->paciente->nombres}}</td>
-    </tr>
-       <tr>
-           <td><b>Fecha De Nacimiento: </b></td>
-           <td>{{$historial->paciente->fecha_nacimiento}}</td>
-       </tr>
-       <tr>
-           <td><B>EPS: </B></td>
-           <td>{{$historial->paciente->eps}}</td>
-       </tr>
-       <tr>
-           <td><B>Correo: </B></td>
-           <td>{{$historial->paciente->correo}}</td>
-       </tr>
-    </table>
-</div>
-
-    <hr>
-
-<div style="page-break-inside: avoid;">
     <table>
-        <h3>Informacion Del Doctor</h3>
-
+        <h3>Informacion Del Paciente</h3>
         <tr>
-            <td><b>Doctor: </b></td>
-            <td>{{$historial->doctor->apellidos." ".$historial->doctor->nombres}}</td>
+            <td><b>Identificacion: </b></td>
+            <td>{{$paciente->di}}</td>
         </tr>
         <tr>
-            <td><b>Licencia Medica: </b></td>
-            <td>{{$historial->doctor->licencia_medica}}</td>
+            <td><B>Paciente: </B></td>
+            <td>{{$paciente->apellidos." ".$paciente->nombres}}</td>
         </tr>
         <tr>
-            <td><b>Especialidad: </b></td>
-            <td>{{$historial->doctor->especialidad}}</td>
+            <td><b>Fecha De Nacimiento: </b></td>
+            <td>{{$paciente->fecha_nacimiento}}</td>
+        </tr>
+        <tr>
+            <td><B>EPS: </B></td>
+            <td>{{$paciente->eps}}</td>
+        </tr>
+        <tr>
+            <td><B>Correo: </B></td>
+            <td>{{$paciente->correo}}</td>
         </tr>
     </table>
 </div>
-
-    <hr>
+<hr>
 
 <div>
 
-    <h3>Diagnostico Del Paciente</h3>
+    <h3>Diagnosticos Del Paciente</h3>
     <br>
-    <div>
-        <b>Fecha: </b> {{$historial->fecha_visita}}
-    </div>
-    <br>
-    <div>
-        {!! $historial->detalle !!}
-    </div>
+    @foreach($historiales as $historiale)
+        <hr>
+        <div>
+            <b>Fecha: </b> {{$historiale->fecha_visita}}
+        </div>
+        <br>
+        <div>
+            {!! $historiale->detalle !!}
+        </div>
+        <hr>
+    @endforeach
 </div>
 </body>
 </html>
+
 
 

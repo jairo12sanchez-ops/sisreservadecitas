@@ -144,4 +144,20 @@ class PacienteController extends Controller
             ->with('mensaje', '¡se elimino correctamente!')
             ->with('icono', 'success');
     }
+
+    public function buscar_por_di($di)
+    {
+        $paciente = Paciente::where('di', $di)->first();
+        if ($paciente) {
+            return response()->json([
+                'status' => 'success',
+                'paciente' => $paciente
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Paciente no encontrado'
+            ]);
+        }
+    }
 }

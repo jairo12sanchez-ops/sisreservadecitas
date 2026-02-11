@@ -81,13 +81,21 @@ class EventController extends Controller
 
 
         $evento = new Event();
-        $evento->title = $request->hora_reserva." ".$doctor->especialidad;
-        $evento->start = $request->fecha_reserva." ".$hora_reserva;
-        $evento->end = $request->fecha_reserva." ".$hora_reserva;
-        $evento->color = '#e82216';
         $evento->users_id = Auth::user()->id;
         $evento->doctor_id  = $request->doctor_id;
         $evento->consultorio_id   = $doctor->consultorio_id ?? 1;
+        $evento->paciente_id = $request->paciente_id; // Guardamos el paciente si se seleccionó
+
+        if ($request->paciente_id) {
+             $paciente = \App\Models\Paciente::find($request->paciente_id);
+             $evento->title = $request->hora_reserva . " " . $paciente->apellidos . " " . $paciente->nombres;
+        } else {
+             $evento->title = $request->hora_reserva." ".$doctor->especialidad;
+        }
+
+        $evento->start = $request->fecha_reserva." ".$hora_reserva;
+        $evento->end = $request->fecha_reserva." ".$hora_reserva;
+        $evento->color = '#e82216';
         $evento->save();
 
         return redirect()->route('admin.index')

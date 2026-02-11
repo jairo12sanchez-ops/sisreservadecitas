@@ -22,7 +22,21 @@
         <td width="330px"></td>
         <td>
             @if($configuracion && $configuracion->logo)
-                <img src="{{storage_path('app/public/'.$configuracion->logo)}}" alt="logo" width="80px">
+                @php
+                    $path = storage_path('app/public/'.$configuracion->logo);
+                    if (file_exists($path)) {
+                        $type = pathinfo($path, PATHINFO_EXTENSION);
+                        $data = file_get_contents($path);
+                        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                    } else {
+                        $base64 = null;
+                    }
+                @endphp
+                @if($base64)
+                    <img src="{{ $base64 }}" alt="logo" width="80px">
+                @else
+                    <span>Sin Logo (Archivo no encontrado)</span>
+                @endif
             @else
                 <span>Sin Logo</span>
             @endif
