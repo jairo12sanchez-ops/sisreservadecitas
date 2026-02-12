@@ -98,6 +98,14 @@ class EventController extends Controller
         $evento->color = '#e82216';
         $evento->save();
 
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Se registro la reserva de la cita medica la manera correcta',
+                'evento' => $evento
+            ], 201);
+        }
+
         return redirect()->route('admin.index')
             ->with('mensaje','Se registro la reserva de la cita medica la manera correcta')
             ->with('icono','success');
@@ -145,7 +153,22 @@ class EventController extends Controller
      */
     public function destroy(Request $request)
     {
-        Event::destroy($request->id);
+        $id = $request->id;
+        $evento = Event::find($id);
+        
+        if (!$evento) {
+            if ($request->wantsJson() || $request->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Reserva no encontrada'], 404);
+            }
+            return redirect()->back()->with(['mensaje' => 'Reserva no encontrada', 'icono' => 'error']);
+        }
+
+        $evento->delete();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json(['status' => 'success', 'message' => 'Registro eliminado correctamente']);
+        }
+
         return redirect()->back()->with([
             'mensaje'=>'Registro eliminado correctamente',
             'icono'=>'success',

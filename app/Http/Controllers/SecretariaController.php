@@ -61,6 +61,14 @@ class SecretariaController extends Controller
 
         $usuario->assignRole('secretaria');
 
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => '¡se registro correctamente!',
+                'secretaria' => $secretaria->load('user')
+            ], 201);
+        }
+
          return redirect()->route('admin.secretarias.index')
              ->with('mensaje', '¡se registro correctamente!')
              ->with('icono', 'success');
@@ -92,32 +100,49 @@ class SecretariaController extends Controller
     {
         $secretaria = Secretaria::find($id);
 
+        if (!$secretaria) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Secretaria no encontrada'], 404);
+            }
+            return redirect()->route('admin.secretarias.index')
+                ->with('mensaje', 'Secretaria no encontrada')
+                ->with('icono', 'error');
+        }
+
         $request->validate([
-            'nombres' => 'required',
-            'apellidos' => 'required',
-            'di' => 'required|unique:secretarias,di,' . $secretaria->id,
-            'telefono' => 'required',
-            'fecha_nacimiento' => 'required',
-            'direccion' => 'required',
-            'email' => 'required|max:250|unique:users,email,'.$secretaria->user->id,
+            'nombres' => 'sometimes|required',
+            'apellidos' => 'sometimes|required',
+            'di' => 'sometimes|required|unique:secretarias,di,' . $secretaria->id,
+            'telefono' => 'sometimes|required',
+            'fecha_nacimiento' => 'sometimes|required',
+            'direccion' => 'sometimes|required',
+            'email' => 'sometimes|required|max:250|unique:users,email,'.$secretaria->user->id,
             'password' => 'nullable|max:250|confirmed',
         ]);
-        $secretaria = Secretaria::find($id);
-        $secretaria->nombres = $request->nombres;
-        $secretaria->apellidos = $request->apellidos;
-        $secretaria->di = $request->di;
-        $secretaria->telefono = $request->telefono;
-        $secretaria->fecha_nacimiento = $request->fecha_nacimiento;
-        $secretaria->direccion = $request->direccion;
+
+        $secretaria->nombres = $request->input('nombres', $secretaria->nombres);
+        $secretaria->apellidos = $request->input('apellidos', $secretaria->apellidos);
+        $secretaria->di = $request->input('di', $secretaria->di);
+        $secretaria->telefono = $request->input('telefono', $secretaria->telefono);
+        $secretaria->fecha_nacimiento = $request->input('fecha_nacimiento', $secretaria->fecha_nacimiento);
+        $secretaria->direccion = $request->input('direccion', $secretaria->direccion);
         $secretaria->save();
 
         $usuario = User::find($secretaria->user->id);
-        $usuario->name = $request->nombres;
-        $usuario->email = $request->email;
+        $usuario->name = $request->input('nombres', $usuario->name);
+        $usuario->email = $request->input('email', $usuario->email);
         if ($request->filled('password')) {
             $usuario->password = Hash::make($request->password);
         }
         $usuario->save();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => '¡se actualizó correctamente!',
+                'secretaria' => $secretaria->load('user')
+            ]);
+        }
 
         return redirect()->route('admin.secretarias.index')
             ->with('mensaje', '¡se actualizó correctamente!')
@@ -135,11 +160,27 @@ class SecretariaController extends Controller
     public function destroy($id)
     {
         $secretaria = Secretaria::find($id);
+        if (!$secretaria) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Secretaria no encontrada'], 404);
+            }
+            return redirect()->route('admin.secretarias.index')
+                ->with('mensaje', 'Secretaria no encontrada')
+                ->with('icono', 'error');
+        }
+
         //eliminar al usuario asociado
         $user = $secretaria->user;
-        $user->delete();
+        if ($user) {
+            $user->delete();
+        }
         //eliminar a la secretaria
         $secretaria->delete();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json(['status' => 'success', 'message' => 'se elimino correctamente!']);
+        }
+
         return redirect()->route('admin.secretarias.index')
             ->with('mensaje', 'se elimino correctamente!')
             ->with('icono', 'success');

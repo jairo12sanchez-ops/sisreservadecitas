@@ -1,0 +1,706 @@
+{
+    "info": {
+        "_postman_id": "full-unified-collection-2026",
+        "name": "SisReservaCitas - CONTROL TOTAL",
+        "description": "Colección UNIFICADA con todos los módulos del sistema. Incluye CRUD completo para cada sección con respuestas JSON y bypass de seguridad CSRF.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "0. Autenticación",
+            "item": [
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "email",
+                                    "value": "admin@admin.com",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "12345678",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/login",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Ver Usuario Autenticado",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/user",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "user"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "1. Pacientes",
+            "item": [
+                {
+                    "name": "Listar Pacientes",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/pacientes",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "pacientes"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Crear Paciente",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "nombres",
+                                    "value": "Pedro",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "apellidos",
+                                    "value": "Castillo",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "di",
+                                    "value": "10203040",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "eps",
+                                    "value": "Sanitas",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "fecha_nacimiento",
+                                    "value": "1985-10-20",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "genero",
+                                    "value": "M",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "telefono",
+                                    "value": "3209874512",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "correo",
+                                    "value": "pedro@test.com",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "direccion",
+                                    "value": "Calle Principal 1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "grupo_sanguineo",
+                                    "value": "A+",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "alergias",
+                                    "value": "Ninguna",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "contacto_emergencia",
+                                    "value": "Ana - 123",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/pacientes",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "pacientes"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Actualizar Paciente",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "urlencoded",
+                            "urlencoded": [
+                                {
+                                    "key": "nombres",
+                                    "value": "Pedro Modificado",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "apellidos",
+                                    "value": "Castillo",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "di",
+                                    "value": "10203040",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "eps",
+                                    "value": "Sanitas",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "telefono",
+                                    "value": "3209874512",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "correo",
+                                    "value": "pedro@test.com",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "direccion",
+                                    "value": "Nueva Dir",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/pacientes/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "pacientes",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Eliminar Paciente",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/pacientes/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "pacientes",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "2. Doctores y Secretarias",
+            "item": [
+                {
+                    "name": "Listar Doctores",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/doctores",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "doctores"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Registrar Doctor",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "nombres",
+                                    "value": "Dr. Fernando",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "apellidos",
+                                    "value": "Ruiz",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "telefono",
+                                    "value": "310111",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "licencia_medica",
+                                    "value": "LIC-TEST",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "especialidad",
+                                    "value": "Endodoncia",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "fernando@doc.com",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "12345678",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "password_confirmation",
+                                    "value": "12345678",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/doctores",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "doctores"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Listar Secretarias",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/secretarias",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "secretarias"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "3. Consultorios y Horarios",
+            "item": [
+                {
+                    "name": "Listar Consultorios",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/consultorios",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "consultorios"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Crear Horario",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "dia",
+                                    "value": "LUNES",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "hora_inicio",
+                                    "value": "08:00",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "hora_fin",
+                                    "value": "12:00",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "doctor_id",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "consultorio_id",
+                                    "value": "1",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/horarios",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "horarios"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "4. Reservas de Citas",
+            "item": [
+                {
+                    "name": "Crear Reserva",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "doctor_id",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "paciente_id",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "fecha_reserva",
+                                    "value": "2026-04-15",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "hora_reserva",
+                                    "value": "10:00",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/eventos",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "eventos"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Eliminar Reserva",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "id",
+                                    "value": "1",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/eventos",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "eventos"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "5. Historial y Pagos",
+            "item": [
+                {
+                    "name": "Ver Historiales",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/historial",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "historial"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Registrar Pago",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "monto",
+                                    "value": "150000",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "fecha_pago",
+                                    "value": "2026-02-12",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "descripcion",
+                                    "value": "Tratamiento de conducto",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "paciente_id",
+                                    "value": "1",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "doctor_id",
+                                    "value": "1",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/pagos",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "pagos"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "6. Sistema (Global)",
+            "item": [
+                {
+                    "name": "Ver Usuarios del Staff",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/usuarios",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "usuarios"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Configuración Clínica",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/configuraciones/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "configuraciones",
+                                "1"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost/sisreservadecitas/public/api",
+            "type": "string"
+        }
+    ]
+}

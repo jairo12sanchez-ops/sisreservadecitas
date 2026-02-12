@@ -77,7 +77,15 @@ class HorarioController extends Controller
                 ->with('icono', 'error');
         }
 
-        Horario::create($request->all());
+        $horario = Horario::create($request->all());
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Horario creado con exito',
+                'horario' => $horario
+            ], 201);
+        }
 
         return redirect()->route('admin.horarios.index')
         ->with('mensaje', 'Horario creado con exito')
@@ -112,8 +120,26 @@ class HorarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Horario $horario)
+    public function destroy($id)
     {
-        //
+        $horario = Horario::find($id);
+        if (!$horario) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Horario no encontrado'], 404);
+            }
+            return redirect()->route('admin.horarios.index')
+                ->with('mensaje', 'Horario no encontrado')
+                ->with('icono', 'error');
+        }
+
+        $horario->delete();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json(['status' => 'success', 'message' => 'Horario eliminado con exito']);
+        }
+
+        return redirect()->route('admin.horarios.index')
+            ->with('mensaje', 'Horario eliminado con exito')
+            ->with('icono', 'success');
     }
 }

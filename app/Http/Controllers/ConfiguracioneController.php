@@ -50,6 +50,14 @@ class ConfiguracioneController extends Controller
 
         $configuracion->save();
 
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Configuracion agregada',
+                'configuracion' => $configuracion
+            ], 201);
+        }
+
         return redirect()->route('admin.configuraciones.index')
             ->with('mensaje','Configuracion agregada')
             ->with('icono','success');
@@ -98,6 +106,14 @@ class ConfiguracioneController extends Controller
         }
         $configuracion->save();
 
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'se actualizo correctamente!',
+                'configuracion' => $configuracion
+            ]);
+        }
+
         return redirect()->route('admin.configuraciones.index')
             ->with('mensaje','se actualizo correctamente!')
             ->with('icono','success');
@@ -115,10 +131,24 @@ class ConfiguracioneController extends Controller
     public function destroy($id)
     {
         $configuracion = configuracione::find($id);
+        if (!$configuracion) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Configuración no encontrada'], 404);
+            }
+            return redirect()->route('admin.configuraciones.index')
+                ->with('mensaje', 'Configuración no encontrada')
+                ->with('icono', 'error');
+        }
+
         Storage::disk('public')->delete($configuracion->logo);
-        $configuracion->delete($id);
+        $configuracion->delete();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json(['status' => 'success', 'message' => 'Configuracion eliminada!']);
+        }
+
         return redirect()->route('admin.configuraciones.index')
-            ->with('mensaje','Configuracion eliminada!')
-            ->with('icono','success');
+            ->with('mensaje', 'Configuracion eliminada!')
+            ->with('icono', 'success');
     }
 }

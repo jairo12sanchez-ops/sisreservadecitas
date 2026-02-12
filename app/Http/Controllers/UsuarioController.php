@@ -29,6 +29,14 @@ class UsuarioController extends Controller
         $usuario->password =Hash::make($request['password']);
         $usuario->save();
 
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => '¡Nuevo Usuario registrado correctamente!',
+                'usuario' => $usuario
+            ], 201);
+        }
+
         return redirect()->route('admin.usuarios.index')
             ->with('mensaje', '¡Nuevo Usuario registrado correctamente!')
         ->with('icono', 'success');
@@ -46,30 +54,64 @@ class UsuarioController extends Controller
     public function update(Request $request, $id){
         $usuario= User::find($id);
 
+        if (!$usuario) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Usuario no encontrado'], 404);
+            }
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'Usuario no encontrado')
+                ->with('icono', 'error');
+        }
+
         $request->validate([
-            'name' => 'required | max:250',
-            'email' => 'required | max:250 | unique:users,email,'.$usuario->id,
-            'password' =>'nullable| max:250 | confirmed',
+            'name' => 'sometimes|required|max:250',
+            'email' => 'sometimes|required|max:250|unique:users,email,'.$usuario->id,
+            'password' =>'nullable|max:250|confirmed',
         ]);
 
-        $usuario->name = $request->name;
-        $usuario->email = $request->email;
-        if ($request-> filled('password')) {
-            $usuario->password = Hash::make($request['password']);
+        $usuario->name = $request->input('name', $usuario->name);
+        $usuario->email = $request->input('email', $usuario->email);
+        if ($request->filled('password')) {
+            $usuario->password = Hash::make($request->password);
         }
-            $usuario->save();
-            return redirect()->route('admin.usuarios.index')
+        $usuario->save();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Usuario actualizado correctamente!',
+                'usuario' => $usuario
+            ]);
+        }
+
+        return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Usuario actualizado correctamente!')
             ->with('icono', 'success');
-        }
+    }
         public function confirmDelete($id){
         $usuario = User::findOrfail($id);
         return view('admin.usuarios.delete', compact('usuario'));
 }
-public function destroy($id){
-        User::destroy($id);
+    public function destroy($id)
+    {
+        $usuario = User::find($id);
+        if (!$usuario) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Usuario no encontrado'], 404);
+            }
+            return redirect()->route('admin.usuarios.index')
+                ->with('mensaje', 'Usuario no encontrado')
+                ->with('icono', 'error');
+        }
+
+        $usuario->delete();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json(['status' => 'success', 'message' => 'Usuario eliminado correctamente!']);
+        }
+
         return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Usuario eliminado correctamente!')
             ->with('icono', 'success');
-}
+    }
     }

@@ -39,7 +39,16 @@ class ConsultorioController extends Controller
             'estado' => 'required',
         ]);
 
-        Consultorio::create($request->all());
+        $consultorio = Consultorio::create($request->all());
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Consultorio creado',
+                'consultorio' => $consultorio
+            ], 201);
+        }
+
         return redirect()->route('admin.consultorios.index')
         ->with('mensaje', 'Consultorio creado')
         ->with('icono','success');
@@ -77,6 +86,15 @@ class ConsultorioController extends Controller
         ]);
         $consultorio= consultorio:: find($id);
         $consultorio->update($request->all());
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Consultorio Actualizado',
+                'consultorio' => $consultorio
+            ]);
+        }
+
         return redirect()->route('admin.consultorios.index')
             ->with('mensaje', 'Consultorio Actualizado')
             ->with('icono','success');
@@ -91,10 +109,24 @@ class ConsultorioController extends Controller
     }
     public function destroy($id)
     {
-        $consultorio= Consultorio::find($id);
+        $consultorio = Consultorio::find($id);
+        if (!$consultorio) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Consultorio no encontrado'], 404);
+            }
+            return redirect()->route('admin.consultorios.index')
+                ->with('mensaje', 'Consultorio no encontrado')
+                ->with('icono', 'error');
+        }
+
         $consultorio->delete();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json(['status' => 'success', 'message' => 'Consultorio Eliminado']);
+        }
+
         return redirect()->route('admin.consultorios.index')
             ->with('mensaje', 'Consultorio Eliminado')
-            ->with('icono','success');
+            ->with('icono', 'success');
     }
 }

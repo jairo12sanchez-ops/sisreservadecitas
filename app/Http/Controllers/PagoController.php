@@ -49,6 +49,15 @@ class PagoController extends Controller
         $pago->paciente_id = $request->paciente_id;
         $pago->doctor_id = $request->doctor_id;
         $pago->save();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'pago creado con exito',
+                'pago' => $pago
+            ], 201);
+        }
+
         return redirect()->route('admin.pagos.index')
         ->with('mensaje','pago creado con exito')
             ->with('icono','success');
@@ -92,6 +101,15 @@ class PagoController extends Controller
         $pago->paciente_id = $request->paciente_id;
         $pago->doctor_id = $request->doctor_id;
         $pago->save();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'pago actualizado con exito',
+                'pago' => $pago
+            ]);
+        }
+
         return redirect()->route('admin.pagos.index')
             ->with('mensaje','pago actualizado  con exito')
             ->with('icono','success');
@@ -106,11 +124,27 @@ class PagoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id){
-        Pago :: destroy($id);
+    public function destroy($id)
+    {
+        $pago = Pago::find($id);
+        if (!$pago) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Pago no encontrado'], 404);
+            }
+            return redirect()->route('admin.pagos.index')
+                ->with('mensaje', 'Pago no encontrado')
+                ->with('icono', 'error');
+        }
+
+        $pago->delete();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json(['status' => 'success', 'message' => 'pago eliminado con exito']);
+        }
+
         return redirect()->route('admin.pagos.index')
-            ->with('mensaje','pago eliminado con exito')
-            ->with('icono','success');
+            ->with('mensaje', 'pago eliminado con exito')
+            ->with('icono', 'success');
     }
     public function pdf($id){
         $configuracion = Configuracione::latest()->first();

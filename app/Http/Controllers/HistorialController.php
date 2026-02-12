@@ -77,6 +77,14 @@ class HistorialController extends Controller
 
         $historial->save();
 
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Historial agregado correctamente',
+                'historial' => $historial
+            ], 201);
+        }
+
         return redirect()->route('admin.historial.index')
         ->with('mensaje','Historial agregado correctamente')
         ->with('icono','success');
@@ -117,6 +125,14 @@ class HistorialController extends Controller
         //$historial->doctor_id = Auth::user()->doctor->id;
         $historial->save();
 
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Historial actualizado correctamente',
+                'historial' => $historial
+            ]);
+        }
+
         return redirect()->route('admin.historial.index')
             ->with('mensaje','Historial actualizado correctamente')
             ->with('icono','success');
@@ -133,12 +149,25 @@ class HistorialController extends Controller
     }
     public function destroy($id)
     {
-        $historal = Historial::find($id);
-        $historal->delete();
-        return redirect()->route('admin.historial.index')
-            ->with('mensaje','Historial eliminado correctamente')
-            ->with('icono','success');
+        $historial = Historial::find($id);
+        if (!$historial) {
+            if (request()->wantsJson() || request()->is('api/*')) {
+                return response()->json(['status' => 'error', 'message' => 'Historial no encontrado'], 404);
+            }
+            return redirect()->route('admin.historial.index')
+                ->with('mensaje', 'Historial no encontrado')
+                ->with('icono', 'error');
+        }
 
+        $historial->delete();
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json(['status' => 'success', 'message' => 'Historial eliminado correctamente']);
+        }
+
+        return redirect()->route('admin.historial.index')
+            ->with('mensaje', 'Historial eliminado correctamente')
+            ->with('icono', 'success');
     }
 
     public function pdf($id)
