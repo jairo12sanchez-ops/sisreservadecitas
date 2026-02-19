@@ -8,6 +8,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sistema de reserva de citas odontologicas | Starter</title>
+    <link href="{{asset('assets/img/logo_odoes.jpeg')}}" rel="icon">
+    <link href="{{asset('assets/img/logo_odoes.jpeg')}}" rel="apple-touch-icon">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

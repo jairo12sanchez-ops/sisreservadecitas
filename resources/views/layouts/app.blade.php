@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="{{asset('assets/img/logo_odoes.jpeg')}}" rel="icon">
+    <link href="{{asset('assets/img/logo_odoes.jpeg')}}" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
