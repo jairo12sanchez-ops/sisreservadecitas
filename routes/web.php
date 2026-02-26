@@ -18,7 +18,7 @@ Route::get('/', [App\Http\Controllers\WebController::class, 'index'])->name('ind
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.index');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //rutas para el admin
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index')->middleware('auth');
 
