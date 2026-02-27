@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\configuracione;
+use App\Models\Configuracione;
 use App\Models\Doctor;
 use App\Models\Event;
 use App\Models\Historial;
-use App\Models\paciente;
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -190,13 +190,13 @@ class HistorialController extends Controller
 
     public function buscar_paciente (Request $request){
         $di = $request->di;
-        $paciente =paciente::where('di',$di)->first();
+        $paciente =Paciente::where('di',$di)->first();
 return view('admin.historial.buscar_paciente',compact('paciente'));
     }
     public function imprimir_historial($id){
         $configuracion = Configuracione::latest()->first();
 
-        $paciente = paciente::find($id);
+        $paciente = Paciente::find($id);
 
         $historiales = Historial::where('paciente_id',$id)->get();
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\paciente;
+use App\Models\Paciente;
 use App\Models\Secretaria;
 use Illuminate\Http\Request;
 

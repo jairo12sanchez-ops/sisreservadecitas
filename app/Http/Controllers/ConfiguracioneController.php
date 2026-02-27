@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\configuracione;
+use App\Models\Configuracione;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +13,7 @@ class ConfiguracioneController extends Controller
      */
     public function index()
     {
-       $configuraciones=configuracione::all();
+       $configuraciones=Configuracione::all();
        return view('admin.configuracion.index',compact('configuraciones'));
     }
 
@@ -40,7 +40,7 @@ class ConfiguracioneController extends Controller
             'logo'=>'required',
         ]);
 
-        $configuracion = new configuracione();
+        $configuracion = new Configuracione();
 
         $configuracion->nombre = $request->nombre;
         $configuracion->direccion = $request->direccion;
@@ -93,7 +93,7 @@ class ConfiguracioneController extends Controller
             'telefono'=>'required',
             'correo'=>'required',
         ]);
-        $configuracion = configuracione:: find($id);
+        $configuracion = Configuracione:: find($id);
 
         $configuracion->nombre = $request->nombre;
         $configuracion->direccion = $request->direccion;
@@ -130,7 +130,7 @@ class ConfiguracioneController extends Controller
     }
     public function destroy($id)
     {
-        $configuracion = configuracione::find($id);
+        $configuracion = Configuracione::find($id);
         if (!$configuracion) {
             if (request()->wantsJson() || request()->is('api/*')) {
                 return response()->json(['status' => 'error', 'message' => 'Configuración no encontrada'], 404);

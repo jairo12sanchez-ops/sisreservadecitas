@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\consultorio;
-use App\Models\configuracione;
+use App\Models\Consultorio;
+use App\Models\Configuracione;
 use App\Models\Event;
 use App\Models\Horario;
 use Illuminate\Http\Request;
@@ -12,13 +12,13 @@ class WebController extends Controller
 {
     public function index(){
         $consultorios = Consultorio::all();
-        $configuracion = configuracione::first();
+        $configuracion = Configuracione::first();
         return view('index', compact('consultorios', 'configuracion'));
     }
 
     public function cargar_datos_consultorios($id){
 
-        $consultorio =consultorio::find($id);
+        $consultorio =Consultorio::find($id);
         try{
             $horarios = Horario::with('doctor','consultorio')->where('consultorio_id',$id)->get();
             //print_r($horarios);

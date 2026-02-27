@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class consultorio extends Model
+class Consultorio extends Model
 {
     use HasFactory;
     protected $fillable =['nombre','ubicacion','capacidad','telefono','especialidad','estado'];
@@ -14,7 +14,7 @@ class consultorio extends Model
         return $this->hasMany(Doctor::class);
     }
     public function horarios(){
-        return $this->hasMany(horario::class);
+        return $this->hasMany(Horario::class);
     }
     public function events(){
         return $this->hasMany(Event::class);
