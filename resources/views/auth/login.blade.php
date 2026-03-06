@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sistema de Citas Odontologicas</title>
-    <link href="{{ asset('assets/img/logo_jasadent.jpeg') }}?v={{ time() }}" rel="icon">
-    <link href="{{ asset('assets/img/logo_jasadent.jpeg') }}?v={{ time() }}" rel="apple-touch-icon">
+    <link href="{{ asset('assets/img/softlogo.jpg') }}?v={{ time() }}" rel="icon">
+    <link href="{{ asset('assets/img/softlogo.jpg') }}?v={{ time() }}" rel="apple-touch-icon">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -26,7 +26,7 @@ background-repeat: no-repeat;
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
             <a href="" class="d-flex justify-content-center align-items-center">
-                <img src="{{ asset('assets/img/logo_jasadent.jpeg') }}?v={{ time() }}" alt="JasaDent Logo" style="max-height: 100px; padding: 10px; background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                <img src="{{ asset('assets/img/softlogo.jpg') }}?v={{ time() }}" alt="JasaDent Logo" style="max-height: 100px; padding: 10px; background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
             </a>
         </div>
         <div class="card-body">
