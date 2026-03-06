@@ -88,7 +88,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <img src="{{ $configuracion ? $configuracion->logo_url : asset('assets/img/logo_empresa_odoes.jpeg') }}" 
                          class="img-fluid elevation-2" 
                          alt="Logo Empresa" 
-                         style="max-width: 80px; border-radius: 8px; background: white; padding: 5px;">
+                         style="max-width: 150px; border-radius: 8px; background: white; padding: 5px;">
                 </div>
                 <div class="info text-center">
                     <a href="#" class="d-block text-white font-weight-bold">{{ Auth::user()->name }}</a>
