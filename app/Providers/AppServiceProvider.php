@@ -24,9 +24,11 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         URL::forceScheme('https');
 
-        if (Schema::hasTable('configuraciones')) {
-            $configuracion = \App\Models\Configuracione::first();
-            view()->share('configuracion', $configuracion);
+        if (!app()->runningInConsole()) {
+            if (Schema::hasTable('configuraciones')) {
+                $configuracion = \App\Models\Configuracione::first();
+                view()->share('configuracion', $configuracion);
+            }
         }
     }
 }
