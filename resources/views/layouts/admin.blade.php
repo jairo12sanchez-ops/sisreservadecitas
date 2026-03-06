@@ -76,7 +76,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{ url('/') }}" class="brand-link">
-            <span class="brand-text font-weight-light" style="margin-left: 20px">JasaDent</span>
+            <img src="{{ asset('assets/img/softlogo.jpg') }}" alt="JasaDent Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">JasaDent</span>
         </a>
         <!-- Sidebar -->
         <div class="sidebar">

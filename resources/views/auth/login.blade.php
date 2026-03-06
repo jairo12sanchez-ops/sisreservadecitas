@@ -25,7 +25,9 @@ background-repeat: no-repeat;
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="{{ url('/') }}" class="h1"><b>JasaDent</b></a>
+            <a href="{{ url('/') }}" class="d-flex justify-content-center align-items-center">
+                <img src="{{ asset('assets/img/softlogo.jpg') }}" alt="JasaDent Logo" style="max-height: 100px; padding: 10px; background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+            </a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Inicio de Sesion</p>

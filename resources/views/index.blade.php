@@ -62,7 +62,7 @@
 
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{url('/')}}" class="logo d-flex align-items-center me-auto">
-                <h1 class="sitename">JasaDent</h1>
+                <img src="{{ asset('assets/img/softlogo.jpg') }}" alt="JasaDent Logo" style="max-height: 100px; padding: 10px; background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
             </a>
 
             <nav id="navmenu" class="navmenu">
