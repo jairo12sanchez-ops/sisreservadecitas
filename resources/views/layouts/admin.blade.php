@@ -83,9 +83,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="info">
-                    <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center">
+                <div class="image mb-2">
+                    <img src="{{ $configuracion ? $configuracion->logo_url : asset('assets/img/logo_empresa_odoes.jpeg') }}" 
+                         class="img-fluid elevation-2" 
+                         alt="Logo Empresa" 
+                         style="max-width: 80px; border-radius: 8px; background: white; padding: 5px;">
+                </div>
+                <div class="info text-center">
+                    <a href="#" class="d-block text-white font-weight-bold">{{ Auth::user()->name }}</a>
                 </div>
             </div>
 
