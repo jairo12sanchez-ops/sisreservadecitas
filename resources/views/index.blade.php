@@ -63,7 +63,20 @@
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{url('/')}}" class="logo d-flex align-items-center me-auto">
                 <!-- Logo de la clínica -->
-                <img src="{{ asset('assets/img/softlogo.jpg') }}?v={{ time() }}" alt="JasaDent Logo" style="max-height: 100px; padding: 10px; background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                @php
+                    $logoPath = public_path('assets/img/softlogo.jpg');
+                    $base64Logo = '';
+                    if (file_exists($logoPath)) {
+                        $type = pathinfo($logoPath, PATHINFO_EXTENSION);
+                        $data = file_get_contents($logoPath);
+                        $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                    }
+                @endphp
+                @if($base64Logo)
+                    <img src="{{ $base64Logo }}" alt="JasaDent Logo" style="max-height: 100px; padding: 10px; background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                @else
+                    <h1 class="sitename">JasaDent Logo</h1>
+                @endif
             </a>
 
             <nav id="navmenu" class="navmenu">

@@ -73,11 +73,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </nav>
     <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="" class="brand-link">
-            <img src="{{ asset('assets/img/softlogo.jpg') }}?v={{ time() }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            @php
+                $brandPath = public_path('assets/img/softlogo.jpg');
+                $brandBase64 = '';
+                if (file_exists($brandPath)) {
+                    $type = pathinfo($brandPath, PATHINFO_EXTENSION);
+                    $data = file_get_contents($brandPath);
+                    $brandBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                }
+            @endphp
+            @if($brandBase64)
+                <img src="{{ $brandBase64 }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            @endif
             <span class="brand-text font-weight-light">JasaDent</span>
         </a>
         <!-- Sidebar -->
