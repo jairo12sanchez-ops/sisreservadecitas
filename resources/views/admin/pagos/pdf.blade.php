@@ -84,12 +84,18 @@
                     {{$configuracion->correo ?? 'Correo no configurado'}}<br>
                 </td>
                 <td style="width: 30%; text-align: right;">
-                    @if($configuracion && $configuracion->logo)
+                    @if($configuracion)
                         @php
                             $path = storage_path('app/public/'.$configuracion->logo);
-                            if (file_exists($path)) {
+                            $staticPath = public_path('assets/img/logo_empresa_odoes.jpeg');
+                            
+                            if ($configuracion->logo && file_exists($path)) {
                                 $type = pathinfo($path, PATHINFO_EXTENSION);
                                 $data = file_get_contents($path);
+                                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                            } elseif (file_exists($staticPath)) {
+                                $type = pathinfo($staticPath, PATHINFO_EXTENSION);
+                                $data = file_get_contents($staticPath);
                                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                             } else {
                                 $base64 = null;
