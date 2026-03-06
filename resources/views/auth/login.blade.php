@@ -25,22 +25,7 @@ background-repeat: no-repeat;
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="" class="d-flex justify-content-center align-items-center">
-                @php
-                    $loginLogoPath = public_path('assets/img/softlogo.jpg');
-                    $loginBase64 = '';
-                    if (file_exists($loginLogoPath)) {
-                        $type = pathinfo($loginLogoPath, PATHINFO_EXTENSION);
-                        $data = file_get_contents($loginLogoPath);
-                        $loginBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                    }
-                @endphp
-                @if($loginBase64)
-                    <img src="{{ $loginBase64 }}" alt="JasaDent Logo" style="max-height: 100px; padding: 10px; background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                @else
-                    <b style="font-size: 24px">JasaDent</b>
-                @endif
-            </a>
+            <a href="{{ url('/') }}" class="h1"><b>JasaDent</b></a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Inicio de Sesion</p>
