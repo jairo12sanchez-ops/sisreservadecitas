@@ -9,8 +9,8 @@
     <meta name="keywords" content="">
 
     <!-- Favicons -->
-    <link href="{{asset('assets/img/logo_odoes.jpeg')}}" rel="icon">
-    <link href="{{asset('assets/img/logo_odoes.jpeg')}}" rel="apple-touch-icon">
+    <link href="{{ asset('assets/img/softlogo.jpg') }}" rel="icon">
+    <link href="{{ asset('assets/img/softlogo.jpg') }}" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
