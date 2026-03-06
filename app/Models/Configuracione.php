@@ -11,7 +11,8 @@ class Configuracione extends Model
 
     public function getLogoUrlAttribute()
     {
-        if ($this->logo && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->logo)) {
+        $dynamicPath = storage_path('app/public/' . $this->logo);
+        if ($this->logo && file_exists($dynamicPath)) {
             return \Illuminate\Support\Facades\Storage::url($this->logo);
         }
         return asset('assets/img/logo_empresa_odoes.jpeg');
