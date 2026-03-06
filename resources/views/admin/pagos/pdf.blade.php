@@ -87,24 +87,32 @@
                     @if($configuracion)
                         @php
                             $path = storage_path('app/public/'.$configuracion->logo);
-                            $staticPath = public_path('assets/img/logo_empresa_odoes.jpeg');
+                            // Intentar varias rutas para el logo estático
+                            $staticPaths = [
+                                public_path('assets/img/logo_empresa_odoes.jpeg'),
+                                base_path('public/assets/img/logo_empresa_odoes.jpeg'),
+                            ];
                             
+                            $base64 = null;
                             if ($configuracion->logo && file_exists($path)) {
                                 $type = pathinfo($path, PATHINFO_EXTENSION);
                                 $data = file_get_contents($path);
                                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                            } elseif (file_exists($staticPath)) {
-                                $type = pathinfo($staticPath, PATHINFO_EXTENSION);
-                                $data = file_get_contents($staticPath);
-                                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                             } else {
-                                $base64 = null;
+                                foreach ($staticPaths as $sP) {
+                                    if (file_exists($sP)) {
+                                        $type = pathinfo($sP, PATHINFO_EXTENSION);
+                                        $data = file_get_contents($sP);
+                                        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                                        break;
+                                    }
+                                }
                             }
                         @endphp
                         @if($base64)
                             <img src="{{ $base64 }}" alt="logo" style="max-width: 70px; max-height: 50px;">
                         @else
-                            <span>Sin Logo</span>
+                            <span style="font-size: 7pt;">Sin Logo</span>
                         @endif
                     @endif
                     <br>

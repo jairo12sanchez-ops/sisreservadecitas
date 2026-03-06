@@ -11,10 +11,10 @@ class Configuracione extends Model
 
     public function getLogoUrlAttribute()
     {
-        $dynamicPath = storage_path('app/public/' . $this->logo);
-        if ($this->logo && file_exists($dynamicPath)) {
-            return \Illuminate\Support\Facades\Storage::url($this->logo);
+        $logoPath = $this->logo;
+        if ($logoPath && \Illuminate\Support\Facades\Storage::disk('public')->exists($logoPath)) {
+            return url('storage/' . $logoPath);
         }
-        return asset('assets/img/logo_empresa_odoes.jpeg');
+        return url('assets/img/logo_empresa_odoes.jpeg');
     }
 }
