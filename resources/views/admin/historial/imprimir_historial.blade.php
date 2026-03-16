@@ -21,12 +21,18 @@
         </td>
         <td width="330px"></td>
         <td>
-            @if($configuracion && $configuracion->logo)
+            @if($configuracion)
                 @php
                     $path = storage_path('app/public/'.$configuracion->logo);
-                    if (file_exists($path)) {
+                    $staticPath = public_path('assets/img/logo_empresa_odoes.jpeg');
+
+                    if ($configuracion->logo && file_exists($path)) {
                         $type = pathinfo($path, PATHINFO_EXTENSION);
                         $data = file_get_contents($path);
+                        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                    } elseif (file_exists($staticPath)) {
+                        $type = pathinfo($staticPath, PATHINFO_EXTENSION);
+                        $data = file_get_contents($staticPath);
                         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                     } else {
                         $base64 = null;
@@ -35,10 +41,8 @@
                 @if($base64)
                     <img src="{{ $base64 }}" alt="logo" width="80px">
                 @else
-                    <span>Sin Logo (Archivo no encontrado)</span>
+                    <span>Sin Logo</span>
                 @endif
-            @else
-                <span>Sin Logo</span>
             @endif
         </td>
     </tr>

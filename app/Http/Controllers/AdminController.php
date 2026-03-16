@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\configuracione;
-use App\Models\consultorio;
+use App\Models\Configuracione;
+use App\Models\Consultorio;
 use App\Models\Doctor;
 use App\Models\Event;
-use App\Models\paciente;
+use App\Models\Paciente;
 use App\Models\Secretaria;
 use App\Models\User;
 use App\Models\Horario;
@@ -19,11 +19,11 @@ class AdminController extends Controller
         $total_usuarios=User::count();
         $total_secretarias=Secretaria::count();
         $total_pacientes = Paciente::count();
-        $total_consultorios= consultorio::count();
+        $total_consultorios= Consultorio::count();
         $total_doctores= Doctor::count();
         $total_horarios= Horario::count();
         $total_eventos= Event::count();
-        $total_configuraciones= configuracione::count();
+        $total_configuraciones= Configuracione::count();
 
         $consultorios = Consultorio::all();
         $doctores = Doctor::all();

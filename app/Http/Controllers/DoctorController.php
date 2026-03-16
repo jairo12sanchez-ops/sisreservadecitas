@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\configuracione;
+use App\Models\Configuracione;
 use App\Models\Doctor;
 use App\Models\Secretaria;
 use App\Models\User;

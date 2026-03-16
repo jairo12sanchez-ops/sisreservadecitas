@@ -67,7 +67,7 @@
                                     <br>
                                     <center>
                                         <output id="list">
-                                            <img src="{{url('storage/'.$configuracion->logo)}}" alt="logo" width="80px">
+                                            <img src="{{ $configuracion->logo_url }}" alt="logo" width="80px">
                                         </output>
                                     </center>
                                     <script>

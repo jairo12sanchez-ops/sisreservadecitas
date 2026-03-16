@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\consultorio;
+use App\Models\Consultorio;
 use Illuminate\Http\Request;
 
 class ConsultorioController extends Controller
@@ -84,7 +84,7 @@ class ConsultorioController extends Controller
             'especialidad' => 'required',
             'estado' => 'required',
         ]);
-        $consultorio= consultorio:: find($id);
+        $consultorio= Consultorio:: find($id);
         $consultorio->update($request->all());
 
         if (request()->wantsJson() || request()->is('api/*')) {

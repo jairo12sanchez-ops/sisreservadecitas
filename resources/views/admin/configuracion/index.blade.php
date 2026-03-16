@@ -39,7 +39,7 @@
                                 <td>{{ $configuracione->telefono}}</td>
                                 <td>{{ $configuracione->correo }}</td>
                                 <td>
-                                    <img src="{{url('storage/'.$configuracione->logo)}}" alt="logo" width="80px">
+                                    <img src="{{ $configuracione->logo_url }}" alt="logo" width="80px">
                                 </td>
                                 <td style="text-align: center">
                                     <div class="btn-group" role="group" aria-label="Basic example">

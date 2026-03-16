@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <label for="">logotipo</label>
                                     <center>
-                                        <img src="{{url('storage/'.$configuracion->logo)}}" alt="logo" width="80px">
+                                        <img src="{{ $configuracion->logo_url }}" alt="logo" width="80px">
                                     </center>
                                 </div>
                             </div>

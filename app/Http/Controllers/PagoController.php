@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\paciente;
-use App\Models\pago;
+use App\Models\Paciente;
+use App\Models\Pago;
 use App\Models\Doctor;
-use App\Models\configuracione;
+use App\Models\Configuracione;
 use Illuminate\Http\Request;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
@@ -16,7 +16,7 @@ class PagoController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        $pagos=pago::all();
+        $pagos=Pago::all();
         $total_monto = Pago::sum('monto');
         return view('admin.pagos.index',compact('pagos', 'total_monto'));
     }
@@ -42,7 +42,7 @@ class PagoController extends Controller
             'fecha_pago' => 'required',
             'descripcion' => 'required',
         ]);
-        $pago = new pago();
+        $pago = new Pago();
         $pago->monto = $request->monto;
         $pago->fecha_pago = $request->fecha_pago;
         $pago->descripcion = $request->descripcion;
@@ -77,7 +77,7 @@ class PagoController extends Controller
      */
     public function edit($id)
     {
-        $pago = pago::find($id);
+        $pago = Pago::find($id);
         $pacientes = Paciente::orderBy('apellidos','asc')->get();
         $doctores = Doctor::orderBy('apellidos','asc')->get();
         return view('admin.pagos.edit',compact('pago','pacientes','doctores'));
@@ -94,7 +94,7 @@ class PagoController extends Controller
             'fecha_pago' => 'required',
             'descripcion' => 'required',
         ]);
-        $pago = pago:: find($id);
+        $pago = Pago:: find($id);
         $pago->monto = $request->monto;
         $pago->fecha_pago = $request->fecha_pago;
         $pago->descripcion = $request->descripcion;
@@ -118,7 +118,7 @@ class PagoController extends Controller
 
 
     public function confirmDelete($id){
-        $pago = pago::find($id);
+        $pago = Pago::find($id);
         return view('admin.pagos.delete',compact('pago'));
     }
     /**
@@ -149,7 +149,7 @@ class PagoController extends Controller
     public function pdf($id){
         $configuracion = Configuracione::latest()->first();
 
-        $pago = pago::find($id);
+        $pago = Pago::find($id);
         $data = "Codigo de seguridad del comprobante de pago del paciente"
             .$pago->paciente->apellidos."".$pago->paciente->nombres."en fecha".$pago->fecha_pago."con el monto de "
         .$pago->monto."monto".$pago->descripcion;
