@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\consultorio;
+use App\Models\Consultorio;
 use App\Models\Doctor;
 use App\Models\Horario;
 use Illuminate\Http\Request;
