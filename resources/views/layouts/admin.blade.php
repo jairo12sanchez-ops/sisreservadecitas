@@ -395,7 +395,7 @@ with font-awesome or any other icon font library -->
             Anything you want
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; {{ date('Y') }} <em>JASA DESARROLLADORES</em>.</strong> Todos los derechos reservados.
     </footer>
 </div>
 <!-- ./wrapper -->
