@@ -29,11 +29,19 @@ class WebController extends Controller
     }
     public function cargar_reserva_doctores($id){
         try{
-            $eventos = Event::where('doctor_id',$id)
-                ->select('id','title', DB::raw('DATE_FORMAT(start, "%Y-%m-%d") as start'), DB::raw('DATE_FORMAT(end, "%Y-%m-%d") as end'),'color')
-                ->get();
-            //print_r($horarios);
-            return response()->json($eventos);
+            $eventos = Event::where('doctor_id',$id)->get();
+            
+            $eventosFormateados = $eventos->map(function ($evento) {
+                return [
+                    'id' => $evento->id,
+                    'title' => $evento->title,
+                    'start' => \Carbon\Carbon::parse($evento->start)->format('Y-m-d'),
+                    'end' => $evento->end ? \Carbon\Carbon::parse($evento->end)->format('Y-m-d') : null,
+                    'color' => $evento->color
+                ];
+            });
+
+            return response()->json($eventosFormateados);
         }catch (\Exception $exception){
             return response()->json(['mensaje' => 'Error en el servidor']);
         }
