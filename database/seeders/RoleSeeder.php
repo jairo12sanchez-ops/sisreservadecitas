@@ -2,138 +2,130 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //seeder para los roles y permisos admin, secretaria, doctores, pacientes, usuarios
-        $admin = Role::create(['name'=>'admin']);
-        $secretaria = Role::create(['name'=>'secretaria']);
-        $doctor = Role::create(['name'=>'doctor']);
-        $paciente = Role::create(['name'=>'paciente']);
-        $usuario = Role::create(['name'=>'usuario']);
+        // Limpiar la caché de permisos
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
+        $admin      = Role::firstOrCreate(['name' => 'admin']);
+        $secretaria = Role::firstOrCreate(['name' => 'secretaria']);
+        $doctor     = Role::firstOrCreate(['name' => 'doctor']);
+        $paciente   = Role::firstOrCreate(['name' => 'paciente']);
+        $usuario    = Role::firstOrCreate(['name' => 'usuario']);
 
-        Permission:: create(['name' => 'admin.index']);
+        $permissions = [
+            'admin.index'                          => [],
+            // usuarios
+            'admin.usuarios.index'                 => [$admin],
+            'admin.usuarios.create'                => [$admin],
+            'admin.usuarios.store'                 => [$admin],
+            'admin.usuarios.show'                  => [$admin],
+            'admin.usuarios.edit'                  => [$admin],
+            'admin.usuarios.update'                => [$admin],
+            'admin.usuarios.confirmDelete'         => [$admin],
+            'admin.usuarios.destroy'               => [$admin],
+            // configuraciones
+            'admin.configuraciones.index'          => [$admin],
+            'admin.configuraciones.create'         => [$admin],
+            'admin.configuraciones.store'          => [$admin],
+            'admin.configuraciones.show'           => [$admin],
+            'admin.configuraciones.edit'           => [$admin],
+            'admin.configuraciones.update'         => [$admin],
+            'admin.configuraciones.confirmDelete'  => [$admin],
+            'admin.configuraciones.destroy'        => [$admin],
+            // secretarias
+            'admin.secretarias.index'              => [$admin],
+            'admin.secretarias.create'             => [$admin],
+            'admin.secretarias.store'              => [$admin],
+            'admin.secretarias.show'               => [$admin],
+            'admin.secretarias.edit'               => [$admin],
+            'admin.secretarias.update'             => [$admin],
+            'admin.secretarias.confirmDelete'      => [$admin],
+            'admin.secretarias.destroy'            => [$admin],
+            // pacientes
+            'admin.pacientes.index'                => [$admin, $secretaria],
+            'admin.pacientes.create'               => [$admin, $secretaria],
+            'admin.pacientes.store'                => [$admin, $secretaria],
+            'admin.pacientes.show'                 => [$admin, $secretaria],
+            'admin.pacientes.edit'                 => [$admin, $secretaria],
+            'admin.pacientes.update'               => [$admin, $secretaria],
+            'admin.pacientes.confirmDelete'        => [$admin, $secretaria],
+            'admin.pacientes.destroy'              => [$admin, $secretaria],
+            // consultorios
+            'admin.consultorios.index'             => [$admin, $secretaria],
+            'admin.consultorios.create'            => [$admin, $secretaria],
+            'admin.consultorios.store'             => [$admin, $secretaria],
+            'admin.consultorios.show'              => [$admin, $secretaria],
+            'admin.consultorios.edit'              => [$admin, $secretaria],
+            'admin.consultorios.update'            => [$admin, $secretaria],
+            'admin.consultorios.confirmDelete'     => [$admin, $secretaria],
+            'admin.consultorios.destroy'           => [$admin, $secretaria],
+            // doctores
+            'admin.doctores.index'                 => [$admin, $secretaria],
+            'admin.doctores.create'                => [$admin, $secretaria],
+            'admin.doctores.store'                 => [$admin, $secretaria],
+            'admin.doctores.show'                  => [$admin, $secretaria],
+            'admin.doctores.edit'                  => [$admin, $secretaria],
+            'admin.doctores.update'                => [$admin, $secretaria],
+            'admin.doctores.confirmDelete'         => [$admin, $secretaria],
+            'admin.doctores.destroy'               => [$admin, $secretaria],
+            'admin.doctores.reportes'              => [$admin, $secretaria],
+            'admin.doctores.pdf'                   => [$admin, $secretaria],
+            // horarios
+            'admin.horarios.index'                 => [$admin, $secretaria],
+            'admin.horarios.create'                => [$admin, $secretaria],
+            'admin.horarios.store'                 => [$admin, $secretaria],
+            'admin.horarios.show'                  => [$admin, $secretaria],
+            'admin.horarios.edit'                  => [$admin, $secretaria],
+            'admin.horarios.update'                => [$admin, $secretaria],
+            'admin.horarios.confirmDelete'         => [$admin, $secretaria],
+            'admin.horarios.destroy'               => [$admin, $secretaria],
+            'admin.horarios.cargar_datos_consultorios' => [$admin, $secretaria],
+            // ajax / reservas
+            'cargar_datos_consultorios'            => [$admin, $usuario, $secretaria],
+            'cargar_reserva_doctores'              => [$admin, $usuario, $secretaria],
+            'ver_reservas'                         => [$admin, $usuario, $secretaria],
+            'admin.eventos.create'                 => [$admin, $usuario, $secretaria],
+            'admin.eventos.destroy'                => [$admin, $usuario, $secretaria],
+            // reservas reportes
+            'admin.reservas.reportes'              => [$admin],
+            'admin.reservas.pdf'                   => [$admin],
+            'admin.reservas.pdf_fechas'            => [$admin],
+            // historial
+            'admin.historial.index'                => [$admin, $doctor],
+            'admin.historial.create'               => [$admin, $doctor],
+            'admin.historial.store'                => [$admin, $doctor],
+            'admin.historial.pdf'                  => [$admin, $doctor],
+            'admin.historial.show'                 => [$admin, $doctor],
+            'admin.historial.edit'                 => [$admin, $doctor],
+            'admin.historial.update'               => [$admin, $doctor],
+            'admin.historial.confirmDelete'        => [$admin, $doctor],
+            'admin.historial.destroy'              => [$admin, $doctor],
+            'admin.historial.buscar_paciente'      => [$admin, $doctor],
+            'admin.historial.imprimir_historial'   => [$admin, $doctor],
+            // pagos
+            'admin.pagos.index'                    => [$admin, $secretaria],
+            'admin.pagos.create'                   => [$admin, $secretaria],
+            'admin.pagos.store'                    => [$admin, $secretaria],
+            'admin.pagos.pdf'                      => [$admin, $secretaria],
+            'admin.pagos.show'                     => [$admin, $secretaria],
+            'admin.pagos.edit'                     => [$admin, $secretaria],
+            'admin.pagos.update'                   => [$admin, $secretaria],
+            'admin.pagos.confirmDelete'            => [$admin, $secretaria],
+            'admin.pagos.destroy'                  => [$admin, $secretaria],
+        ];
 
-// rutas para el admin - usuarios
-        Permission:: create(['name'=>'admin.usuarios.index'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.create'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.store'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.show'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.edit'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.update'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.confirmDelete'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.usuarios.destroy'])->syncRoles([$admin]);
-
-        // rutas para el admin - configuraciones
-        Permission:: create(['name'=>'admin.configuraciones.index'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.configuraciones.create'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.configuraciones.store'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.configuraciones.show'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.configuraciones.edit'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.configuraciones.update'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.configuraciones.confirmDelete'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.configuraciones.destroy'])->syncRoles([$admin]);
-
-//rutas para el admin-secretarias
-        Permission:: create(['name'=>'admin.secretarias.index'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.create'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.store'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.show'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.edit'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.update'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.confirmDelete'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.secretarias.destroy'])->syncRoles([$admin]);
-
-//rutas para el admin-pacientes
-        Permission:: create(['name'=>'admin.pacientes.index'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.create'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.store'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.show'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.edit'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.update'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.confirmDelete'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.pacientes.destroy'])->syncRoles([$admin,$secretaria]);
-
-//rutas para el admin-consultorios
-        Permission:: create(['name'=>'admin.consultorios.index'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.create'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.store'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.show'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.edit'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.update'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.confirmDelete'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.consultorios.destroy'])->syncRoles([$admin,$secretaria]);
-
-
-//rutas para el admin-doctores
-        Permission:: create(['name'=>'admin.doctores.index'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.create'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.store'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.show'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.edit'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.update'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.confirmDelete'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.destroy'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.reportes'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.doctores.pdf'])->syncRoles([$admin,$secretaria]);
-
-//rutas para el admin-horarios
-        Permission:: create(['name'=>'admin.horarios.index'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.create'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.store'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.show'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.edit'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.update'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.confirmDelete'])->syncRoles([$admin,$secretaria]);
-        Permission:: create(['name'=>'admin.horarios.destroy'])->syncRoles([$admin,$secretaria]);
-
-        Permission:: create(['name'=>'admin.horarios.cargar_datos_consultorios'])->syncRoles([$admin,$secretaria]);
-
-        ///RUTAS PARA EL USUARIO
-        /////ajax
-        Permission:: create(['name'=>'cargar_datos_consultorios'])->syncRoles([$admin,$usuario,$secretaria]);
-        Permission:: create(['name'=>'cargar_reserva_doctores'])->syncRoles([$admin,$usuario,$secretaria]);
-        Permission:: create(['name'=>'ver_reservas'])->syncRoles([$admin,$usuario,$secretaria]);
-        Permission:: create(['name'=>'admin.eventos.create'])->syncRoles([$admin,$usuario,$secretaria]);
-        Permission:: create(['name'=>'admin.eventos.destroy'])->syncRoles([$admin,$usuario,$secretaria]);
-
-        //rutas para las reservas
-        Permission:: create(['name'=>'admin.reservas.reportes'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.reservas.pdf'])->syncRoles([$admin]);
-        Permission:: create(['name'=>'admin.reservas.pdf_fechas'])->syncRoles([$admin]);
-
-        //rutas para el historial clinico,
-        Permission:: create(['name'=>'admin.historial.index'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.create'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.store'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.pdf'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.show'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.edit'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.update'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.confirmDelete'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.destroy'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.buscar_paciente'])->syncRoles([$admin, $doctor]);
-        Permission:: create(['name'=>'admin.historial.imprimir_historial'])->syncRoles([$admin, $doctor]);
-
-        //rutas para pagos
-        Permission:: create(['name'=>'admin.pagos.index'])->syncRoles([$admin, $secretaria]);
-        Permission:: create(['name'=>'admin.pagos.create'])->syncRoles([$admin, $secretaria]);
-        Permission:: create(['name'=>'admin.pagos.store'])->syncRoles([$admin, $secretaria]);
-        Permission:: create(['name'=>'admin.pagos.pdf'])->syncRoles([$admin, $secretaria]);
-        Permission:: create(['name'=>'admin.pagos.show'])->syncRoles([$admin, $secretaria]);
-        Permission:: create(['name'=>'admin.pagos.edit'])->syncRoles([$admin, $secretaria]);
-        Permission:: create(['name'=>'admin.pagos.update'])->syncRoles([$admin, $secretaria]);
-        Permission:: create(['name'=>'admin.pagos.confirmDelete'])->syncRoles([$admin, $secretaria]);
-        Permission:: create(['name'=>'admin.pagos.destroy'])->syncRoles([$admin, $secretaria]);
+        foreach ($permissions as $name => $roles) {
+            $perm = Permission::firstOrCreate(['name' => $name]);
+            if (!empty($roles)) {
+                $perm->syncRoles($roles);
+            }
         }
+    }
 }
