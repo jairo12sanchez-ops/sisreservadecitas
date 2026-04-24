@@ -114,7 +114,6 @@ class DatabaseSeeder extends Seeder
         );
         $usuario1User->syncRoles('usuario');
 
-        $this->call([PacienteSeeder::class]);
 
         Horario::firstOrCreate(
             ['dia' => 'LUNES', 'doctor_id' => $doctor1User->id],
