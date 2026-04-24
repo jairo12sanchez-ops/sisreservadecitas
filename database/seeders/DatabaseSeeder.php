@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\configuracione;
-use App\Models\consultorio;
+use App\Models\Configuracione;
+use App\Models\Consultorio;
 use App\Models\Doctor;
 use App\Models\Horario;
 use App\Models\Secretaria;
@@ -89,15 +89,15 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        consultorio::firstOrCreate(
+        Consultorio::firstOrCreate(
             ['nombre' => 'ORTODONCIA'],
             ['ubicacion' => '1-1A', 'capacidad' => '10', 'telefono' => 'EXT 4', 'especialidad' => 'ORTODONCIA', 'estado' => 'ACTIVO']
         );
-        consultorio::firstOrCreate(
+        Consultorio::firstOrCreate(
             ['nombre' => 'ODONTOLOGIA GENERAL'],
             ['ubicacion' => '1-1B', 'capacidad' => '10', 'telefono' => 'EXT 5', 'especialidad' => 'ODONTOLOGIA', 'estado' => 'ACTIVO']
         );
-        consultorio::firstOrCreate(
+        Consultorio::firstOrCreate(
             ['nombre' => 'ENDODONCIA'],
             ['ubicacion' => '1-1C', 'capacidad' => '10', 'telefono' => 'EXT 8', 'especialidad' => 'ENDODONCIA', 'estado' => 'ACTIVO']
         );
@@ -121,7 +121,7 @@ class DatabaseSeeder extends Seeder
             ['hora_inicio' => '08:00', 'hora_fin' => '14:00', 'consultorio_id' => 1]
         );
 
-        configuracione::firstOrCreate(
+        Configuracione::firstOrCreate(
             ['nombre' => 'Clinica Odoes'],
             [
                 'direccion' => 'avenida circunvalar # 20n 30',
